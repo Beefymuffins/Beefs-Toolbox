@@ -6,7 +6,7 @@ export const handleProxyCheck = async () => {
 
   const { ProxyListOne, ProxyListTwo } = answers;
 
-  if (!ProxyListOne || !ProxyListTwo || ProxyListOne !== false) {
+  if (!ProxyListOne || !ProxyListTwo) {
     return `Make sure you have proxy list imputed`;
   }
 
