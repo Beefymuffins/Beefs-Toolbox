@@ -1,52 +1,42 @@
 #! /usr/bin/env node
-import greet from './commands/greet.js';
-import chalk from 'chalk';
-import { readFileSync, createWriteStream } from 'fs';
+/* eslint-disable no-promise-executor-return */
+import inquirer from 'inquirer';
+import { logLogo, logLogo2, version } from './utils/logo.js';
+import { handleProxyCheck } from './commands/proxy-checker/handleProxyCheck.js';
 
-//! TO make the CLI work, I think I need to make it so the user can submit the two list themselves and spit out the difference.
+export const run = async () => {
+  try {
+    process.title = `Proxy-Checker - Version: ${version}`;
+    logLogo2();
+    console.log('');
 
+    /* eslint-disable-next-line */
+    let answer = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'action',
+        message: 'What would you like to do:',
+        choices: ['Proxy-Checker', 'Exit CLI'],
+      },
+    ]);
 
-
-// Function to read the file
-const getList = (filename) => {
-  if (filename.length === 0) {
-    console.log(chalk.red.bold('File is empty.'));
-    return;
+    if (answer.action === 'Exit CLI') {
+      console.log('👋 Exiting Proxy-Checker...');
+      process.exit();
+    } else if (answer.action === 'Proxy-Checker') {
+      await handleProxyCheck();
+    }
+  } catch (error) {
+    console.log(`error = `, error);
   }
-  if (!filename) {
-    console.log(chalk.red.bold('No file exist!'));
-    return;
-  }
-  const contents = readFileSync(filename, 'utf-8');
-  const arr = contents.split(/\r?\n/);
-  return arr;
 };
 
-// Get data from the files
-const ogProxyList = getList('textFiles/originalList.txt');
-const compareProxyList = getList('textFiles/compareList.txt');
+const Main = async () => {
+  global.runMain = run;
+  global.sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// Compare the List (Creates a new array with non matching proxies)
-const checkList = ogProxyList.filter((x) => !compareProxyList.includes(x));
-
-// Function to write the file
-const result = (data) => {
-  const file = createWriteStream('textFiles/results.txt');
-  file.on('error', function (err) {
-    Console.log(chalk.red.bold('Error writing to file'));
-  });
-  data.forEach((value) => file.write(`${value}\r\n`));
-  file.end();
-  console.log(chalk.green.bold('New proxy list created in results folder!'))
+  // Run script
+  run();
 };
 
-// Use the function to write the file with the results
-const compareResults = result(checkList)
-
-// const start = () => {
-//   greet();
-
-//   // result(checkList)
-// }
-
-// start()
+Main();

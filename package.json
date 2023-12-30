@@ -1,19 +1,29 @@
 {
   "name": "proxy-list-checker",
-  "version": "1.0.0",
+  "version": "1.0.0-CLI",
   "description": "",
   "main": "index.js",
   "type": "module",
- 
+  "bin": {
+    "toolbox": "./index.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ."
+  },
+  "eslintConfig": {
+    "extends": [
+      "wesbos"
+    ]
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@inquirer/editor": "^1.2.13",
     "chalk": "^5.3.0",
-    "commander": "^11.0.0",
-    "figlet": "^1.6.0",
-    "gradient-string": "^2.0.2"
+    "eslint-config-wesbos": "^3.2.3",
+    "gradient-string": "^2.0.2",
+    "inquirer": "^9.2.12",
+    "waait": "^1.0.5"
   }
 }
+
