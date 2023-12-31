@@ -13,7 +13,10 @@
   "eslintConfig": {
     "extends": [
       "wesbos"
-    ]
+    ],
+    "rules": {
+      "no-promise-executor-return": 0
+    }
   },
   "author": "",
   "license": "ISC",

@@ -1,4 +1,5 @@
 import inquirer from 'inquirer';
+import chalk from 'chalk';
 import { questions } from './proxyQuestions.js';
 
 export const handleProxyCheck = async () => {
@@ -22,6 +23,7 @@ export const handleProxyCheck = async () => {
 
   // Make it print one proxy per line
   const newList = noEmptyStrings.toString().split(',').join('\n');
+  console.log(chalk.bgGreen.bold(`These proxies have not been used yet: `));
   console.log(newList);
 
   return newList;
