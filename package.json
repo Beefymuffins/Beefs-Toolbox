@@ -15,18 +15,20 @@
       "wesbos"
     ],
     "rules": {
-      "no-promise-executor-return": 0
+      "no-promise-executor-return": 0,
+      "no-plusplus": 0
     }
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@inquirer/editor": "^1.2.13",
+    "axios": "^1.6.3",
     "chalk": "^5.3.0",
     "eslint-config-wesbos": "^3.2.3",
     "gradient-string": "^2.0.2",
     "inquirer": "^9.2.12",
+    "request": "^2.88.2",
     "waait": "^1.0.5"
   }
 }
-

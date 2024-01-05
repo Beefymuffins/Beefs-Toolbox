@@ -1,4 +1,3 @@
-/* eslint-disable no-plusplus */
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import { questions } from './questions.js';

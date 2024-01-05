@@ -1,8 +1,9 @@
 import inquirer from 'inquirer';
 import { logLogo, version } from './logo.js';
-import { handleProxyCheck } from '../commands/proxy-checker/handleProxyCheck.js';
-import { handleAccountSplitter } from '../commands/account-splitter/index.js';
-import { sleep } from './utils.js';
+import { handleProxyCheck } from '../commands/proxies/compareUsed/handleProxyCheck.js';
+import { handleAccountSplitter } from '../commands/accounts/account-splitter/index.js';
+import { sleep } from '../utils/utils.js';
+import { handleProxyValidation } from '../commands/proxies/validate/index.js';
 
 export const run = async () => {
   try {
@@ -15,7 +16,12 @@ export const run = async () => {
         type: 'list',
         name: 'action',
         message: 'What would you like to do:',
-        choices: ['Proxy-Checker', 'Account-Splitter', 'Exit CLI'],
+        choices: [
+          'Proxy-Checker',
+          'Account-Splitter',
+          'Proxy-Validator',
+          'Exit CLI',
+        ],
       },
     ]);
 
@@ -28,6 +34,8 @@ export const run = async () => {
       await handleProxyCheck();
     } else if (answer.action === 'Account-Splitter') {
       await handleAccountSplitter();
+    } else if (answer.action === 'Proxy-Validator') {
+      await handleProxyValidation();
     }
   } catch (error) {
     console.log(`error = `, error);
