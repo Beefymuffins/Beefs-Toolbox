@@ -4,6 +4,7 @@ import { handleProxyCheck } from '../commands/proxies/compareUsed/handleProxyChe
 import { handleAccountSplitter } from '../commands/accounts/account-splitter/index.js';
 import { sleep } from '../utils/utils.js';
 import { handleProxyValidation } from '../commands/proxies/validate/index.js';
+import { handleTimeConversion } from '../commands/time-conversion/index.js';
 
 export const run = async () => {
   try {
@@ -15,11 +16,12 @@ export const run = async () => {
       {
         type: 'list',
         name: 'action',
-        message: 'What would you like to do:',
+        message: 'What tool do you need?',
         choices: [
-          'Proxy-Checker',
-          'Account-Splitter',
+          'Compare-Proxy-lists',
+          'Account-User:Pass-Splitter',
           'Proxy-Validator',
+          'Time-Conversion',
           'Exit CLI',
         ],
       },
@@ -30,12 +32,14 @@ export const run = async () => {
       await sleep(1500);
       console.clear();
       process.exit();
-    } else if (answer.action === 'Proxy-Checker') {
+    } else if (answer.action === 'Compare-Proxy-lists') {
       await handleProxyCheck();
-    } else if (answer.action === 'Account-Splitter') {
+    } else if (answer.action === 'Account-User:Pass-Splitter') {
       await handleAccountSplitter();
     } else if (answer.action === 'Proxy-Validator') {
       await handleProxyValidation();
+    } else if (answer.action === 'Time-Conversion') {
+      await handleTimeConversion();
     }
   } catch (error) {
     console.log(`error = `, error);

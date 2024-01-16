@@ -3,10 +3,7 @@ import chalk from 'chalk';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import {
-  createFileHyperlink,
-  getAuthInfoFromProxyUrl,
-} from '../../../utils/utils.js';
+import { fileUrl, getAuthInfoFromProxyUrl } from '../../../utils/utils.js';
 
 // * Ideas:
 // Make the url dynamic (can check proxy against any site inputted)
@@ -63,10 +60,8 @@ export const validateProxies = async (proxies) => {
   console.log(`${validProxies.length} out of ${proxies.length} valid proxies.`);
 
   // Print hyperlink to the console
-  const absolutePath = `${__dirname}/outputFile.txt`;
-  console.log(
-    chalk.blue(`Valid Proxies: ${createFileHyperlink(absolutePath)}`)
-  );
+  const hyperlink = fileUrl(`${__dirname}/outputFile.txt`);
+  console.log(chalk.blue(`Valid Proxies File: ${hyperlink}`));
 };
 
 const makeRequest = (proxyInfo) => {
