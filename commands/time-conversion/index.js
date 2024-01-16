@@ -31,14 +31,18 @@ export const handleTimeConversion = async () => {
     const convertedTimeInfo = convertUTCTimeToEST(time);
 
     return console.log(
-      `UTC converted to EST: ${chalk.green(convertedTimeInfo.convertedTime)}`
+      `UTC: ${chalk.blue(time)} => to EST: ${chalk.green(
+        convertedTimeInfo.convertedTime
+      )}`
     );
   }
   if (sourceTimeZone === 'MST') {
     const convertedTimeInfo = convertMSTtoEST(time);
 
     return console.log(
-      `MST converted to EST: ${chalk.green(convertedTimeInfo.convertedTime)}`
+      `MST: ${chalk.blue(time)} => to EST: ${chalk.green(
+        convertedTimeInfo.convertedTime
+      )}`
     );
   }
 
