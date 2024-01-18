@@ -1,10 +1,9 @@
 import inquirer from 'inquirer';
 import { logLogo, version } from './logo.js';
-import { handleProxyCheck } from '../commands/proxies/compareUsed/handleProxyCheck.js';
-import { handleAccountSplitter } from '../commands/accounts/account-splitter/index.js';
 import { sleep } from '../utils/utils.js';
-import { handleProxyValidation } from '../commands/proxies/validate/index.js';
-import { handleTimeConversion } from '../commands/time-conversion/index.js';
+import { handleProxy } from '../commands/proxies/index.js';
+import { handleAccount } from '../commands/accounts/index.js';
+import { handleMiscellaneous } from '../commands/miscellaneous/index.js';
 
 export const run = async () => {
   try {
@@ -16,14 +15,8 @@ export const run = async () => {
       {
         type: 'list',
         name: 'action',
-        message: 'What tool do you need?',
-        choices: [
-          'Compare-Proxy-lists',
-          'Account-User:Pass-Splitter',
-          'Proxy-Validator',
-          'Time-Conversion',
-          'Exit CLI',
-        ],
+        message: 'What are you working with?',
+        choices: ['Proxies', 'Accounts', 'Miscellaneous', 'Exit'],
       },
     ]);
 
@@ -32,14 +25,12 @@ export const run = async () => {
       await sleep(1500);
       console.clear();
       process.exit();
-    } else if (answer.action === 'Compare-Proxy-lists') {
-      await handleProxyCheck();
-    } else if (answer.action === 'Account-User:Pass-Splitter') {
-      await handleAccountSplitter();
-    } else if (answer.action === 'Proxy-Validator') {
-      await handleProxyValidation();
-    } else if (answer.action === 'Time-Conversion') {
-      await handleTimeConversion();
+    } else if (answer.action === 'Proxies') {
+      await handleProxy();
+    } else if (answer.action === 'Accounts') {
+      await handleAccount();
+    } else if (answer.action === 'Miscellaneous') {
+      await handleMiscellaneous();
     }
   } catch (error) {
     console.log(`error = `, error);

@@ -62,10 +62,8 @@ export const handleTimeConversion = async () => {
 };
 
 const convertTimeMoment = (time, sourceTimezone, targetTimezone) => {
-  console.log(`time = `, time);
   // Parse the input time string
   const inputTime = moment(time, 'hh:mm A');
-  console.log(`inputTime = `, inputTime);
 
   // Check if DST is in effect for source timezone
   const isSourceDST = inputTime.clone().tz(sourceTimezone).isDST();
