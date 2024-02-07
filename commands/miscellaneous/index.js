@@ -1,6 +1,7 @@
 import inquirer from 'inquirer';
 import { handleTimeConversion } from './time-conversion/index.js';
 import { sleep } from '../../utils/utils.js';
+import { handleAddressJig } from './jig-address/index.js';
 
 export const handleMiscellaneous = async () => {
   const answer = await inquirer.prompt([
@@ -8,7 +9,7 @@ export const handleMiscellaneous = async () => {
       type: 'list',
       name: 'action',
       message: 'What tool do you need?',
-      choices: ['Time-Conversion', 'Exit CLI'],
+      choices: ['Time-Conversion', 'Jig-Address', 'Exit CLI'],
     },
   ]);
 
@@ -19,5 +20,7 @@ export const handleMiscellaneous = async () => {
     process.exit();
   } else if (answer.action === 'Time-Conversion') {
     await handleTimeConversion();
+  } else if (answer.action === 'Jig-Address') {
+    await handleAddressJig();
   }
 };
