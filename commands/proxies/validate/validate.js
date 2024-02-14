@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import { fileUrl, getAuthInfoFromProxyUrl } from '../../../utils/utils.js';
+import { fileUrl, getAuthInfoFromProxyUrl } from '../../../utils/helpers.js';
 
 // * Ideas:
 // Make the url dynamic (can check proxy against any site inputted)

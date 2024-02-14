@@ -1,5 +1,5 @@
 import inquirer from 'inquirer';
-import { sleep } from '../../utils/utils.js';
+import { sleep } from '../../utils/helpers.js';
 import { handleAccountSplitter } from './account-splitter/index.js';
 
 export const handleAccount = async () => {

@@ -8,7 +8,7 @@ import {
   handleFourLetterJig,
   handleChangeSuffixJig,
 } from './handlers/index.js';
-import { capStreetName } from '../../../utils/utils.js';
+import { capStreetName } from '../../../utils/helpers.js';
 
 /**
  * ? Options to add:

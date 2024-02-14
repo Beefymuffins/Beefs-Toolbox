@@ -2,7 +2,7 @@ import {
   getJigDataJsonFile,
   getRandomArrayIndex,
   getRandomMinMaxNumber,
-} from '../../../../utils/utils.js';
+} from '../../../../utils/helpers.js';
 
 const streetSuffixFilePath = 'streetSuffix.json';
 const unitDesignationFilePath = 'unitDesignator.json';

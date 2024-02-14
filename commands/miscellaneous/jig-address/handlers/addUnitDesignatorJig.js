@@ -2,7 +2,7 @@ import {
   getJigDataJsonFile,
   getRandomMinMaxNumber,
   getRandomArrayIndex,
-} from '../../../../utils/utils.js';
+} from '../../../../utils/helpers.js';
 
 const filePath = 'unitDesignator.json';
 

@@ -1,4 +1,4 @@
-import { isValidTime } from '../../../utils/utils.js';
+import { isValidTime } from '../../../utils/helpers.js';
 
 /* eslint-disable prefer-regex-literals */
 export const questions = [

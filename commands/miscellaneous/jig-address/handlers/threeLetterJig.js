@@ -1,7 +1,7 @@
 import {
   getJigDataJsonFile,
   getRandomArrayIndex,
-} from '../../../../utils/utils.js';
+} from '../../../../utils/helpers.js';
 
 const filePath = '3LetterCombinations.json';
 

@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
 import { handleTimeConversion } from './time-conversion/index.js';
-import { sleep } from '../../utils/utils.js';
+import { sleep } from '../../utils/helpers.js';
 import { handleAddressJig } from './jig-address/index.js';
 
 export const handleMiscellaneous = async () => {

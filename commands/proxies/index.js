@@ -1,5 +1,5 @@
 import inquirer from 'inquirer';
-import { sleep } from '../../utils/utils.js';
+import { sleep } from '../../utils/helpers.js';
 import { handleProxyCheck } from './compareUsed/handleProxyCheck.js';
 import { handleProxyValidation } from './validate/index.js';
 

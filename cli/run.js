@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
 import { logLogo, version } from './logo.js';
-import { sleep } from '../utils/utils.js';
+import { sleep } from '../utils/helpers.js';
 import { handleProxy } from '../commands/proxies/index.js';
 import { handleAccount } from '../commands/accounts/index.js';
 import { handleMiscellaneous } from '../commands/miscellaneous/index.js';
