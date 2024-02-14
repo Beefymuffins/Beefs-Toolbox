@@ -58,7 +58,7 @@ const generateCombinations = async (combinationLength) => {
   }
 };
 
-const result = generateCombinations(3);
+// const result = generateCombinations(4);
 
 // ---------------------------------------------------------------------------------------------------------------------------
 

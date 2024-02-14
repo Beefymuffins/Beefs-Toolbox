@@ -2,8 +2,9 @@
 /* eslint-disable prefer-regex-literals */
 /* eslint-disable no-useless-escape */
 /* eslint-disable no-shadow */
-
+import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -34,7 +35,7 @@ export const getAuthInfoFromProxyUrl = (proxy) => {
   return [host, port];
 };
 
-// VAlidate time format
+// Validate time format
 export const isValidTime = (str) => {
   // Regex to check valid
   // time in 12-hour format
@@ -52,4 +53,46 @@ export const isValidTime = (str) => {
     return 'true';
   }
   return 'false';
+};
+
+// Read JigAddress Json Files
+export const getJigDataJsonFile = (filePath) => {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  const absolutePath = path.join(
+    __dirname,
+    `../commands/miscellaneous/jig-address/data/${filePath}`
+  );
+
+  const file = JSON.parse(fs.readFileSync(absolutePath, 'utf-8'));
+
+  return file;
+};
+
+// Get Random Number between (min - max)
+export const getRandomMinMaxNumber = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1)) + min;
+
+// Get Random Number
+export const getRandomNumber = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1)) + min;
+
+// Function to generate a random unit designation
+export const getRandomArrayIndex = (array) => {
+  const randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
+};
+
+export const capitalized = (word) =>
+  word.charAt(0).toUpperCase() + word.slice(1);
+
+export const capStreetName = (address) => {
+  const words = address.split(' ');
+
+  // Check if there is at least one word
+  if (words.length >= 2) {
+    words[1] = capitalized(words[1]);
+  }
+
+  return words.join(' ');
 };
