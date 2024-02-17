@@ -2,6 +2,7 @@
 /* eslint-disable prefer-regex-literals */
 /* eslint-disable no-useless-escape */
 /* eslint-disable no-shadow */
+import chalk from 'chalk';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -95,4 +96,14 @@ export const capStreetName = (address) => {
   }
 
   return words.join(' ');
+};
+
+export const writeToFile = async (filename, data) => {
+  fs.writeFile(filename, data, (err) => {
+    if (err) {
+      console.log(chalk.red(`Error writing to ${filename}: ${err.message}`));
+      throw err;
+    }
+    console.log('The file has been saved successfully!');
+  });
 };

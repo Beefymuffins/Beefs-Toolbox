@@ -3,7 +3,11 @@ import chalk from 'chalk';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import { fileUrl, getAuthInfoFromProxyUrl } from '../../../utils/helpers.js';
+import {
+  fileUrl,
+  getAuthInfoFromProxyUrl,
+  writeToFile,
+} from '../../../utils/helpers.js';
 
 // * Ideas:
 // Make the url dynamic (can check proxy against any site inputted)
@@ -81,15 +85,5 @@ const makeRequest = (proxyInfo) => {
   return axios.get('http://www.google.com', {
     proxy: proxyOptions,
     timeout: 10000,
-  });
-};
-
-const writeToFile = async (filename, data) => {
-  fs.writeFile(filename, data, (err) => {
-    if (err) {
-      console.log(chalk.red(`Error writing to ${filename}: ${err.message}`));
-      throw err;
-    }
-    console.log('The file has been saved!');
   });
 };

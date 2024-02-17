@@ -9,12 +9,15 @@ import {
   handleChangeSuffixJig,
 } from './handlers/index.js';
 import { capStreetName } from '../../../utils/helpers.js';
+import { writeCsvFile } from './writeCsvFile.js';
 
 /**
  * ? Options to add:
  * Slight Misspell jig
  * Random Periods
  */
+
+// ? Right now im doing nothing with addressTwo
 
 export const handleAddressJig = async () => {
   const answers = await inquirer.prompt(questions);
@@ -44,7 +47,7 @@ export const handleAddressJig = async () => {
 
   const addyToJig = address.join(' ');
 
-  // Create Random Jigs from 1 - 500
+  // Create Random Or Custom Jigs from 1 - 500
   if (typeOfJig === 'random') {
     const jiggedAddresses = handleRandomAddressJig(
       addyToJig,
@@ -56,11 +59,10 @@ export const handleAddressJig = async () => {
     jigs.push(jiggedAddresses);
   }
 
-  // Create Custom Jigs from 1 - 500
   if (typeOfJig === 'custom') {
     let possibleJigs;
 
-    // Just street suffix jig
+    // Random Street suffix jig
     if (jigCustomChoice.includes('changeSuffix')) {
       const addy = possibleJigs?.length > 0 ? possibleJigs : addyToJig;
       const result = handleChangeSuffixJig(addy, amountToJig);
@@ -68,7 +70,7 @@ export const handleAddressJig = async () => {
       possibleJigs = result;
     }
 
-    // Just 3 Letter Jigs (before or after)
+    // 3 Letter Jigs (before or after)
     if (jigCustomChoice.includes('threeLetter')) {
       const addy = possibleJigs?.length > 0 ? possibleJigs : addyToJig;
       const result = handleThreeLetterJig(
@@ -81,7 +83,7 @@ export const handleAddressJig = async () => {
       possibleJigs = result;
     }
 
-    // Just 4 Letter Jigs (before or after)
+    // 4 Letter Jigs (before or after)
     if (jigCustomChoice.includes('fourLetter')) {
       const addy = possibleJigs?.length > 0 ? possibleJigs : addyToJig;
       const result = handleFourLetterJig(
@@ -93,6 +95,7 @@ export const handleAddressJig = async () => {
       possibleJigs = result;
     }
 
+    // Random Unit Designator Jigg
     if (jigCustomChoice.includes('addUnitDesignator')) {
       console.log('HANDLING UNIT DESIGNATION');
       const addy = possibleJigs?.length > 0 ? possibleJigs : addyToJig;
@@ -101,16 +104,15 @@ export const handleAddressJig = async () => {
       possibleJigs = result;
     }
 
-    // Reduce arrays down to single array
-    const consolidatedArray = [].concat(...possibleJigs);
-    console.log(`consolidatedArray :`, consolidatedArray);
-
     // Add new addys to jigs array
-    jigs.push(consolidatedArray);
+    jigs.push(possibleJigs);
   }
 
-  // TODO: Write results to file
-  // SPlit on the '\n' when writing to file. Creates Line two Ex: '123 main LIZO Canyn\nFLOOR 72'
+  // Reduce the array down to one layer
+  const consolidatedArray = [].concat(...jigs);
 
-  return jigs;
+  // Write results to CSV file
+  const newFile = writeCsvFile(consolidatedArray);
+
+  return newFile;
 };
