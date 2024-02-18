@@ -7,7 +7,6 @@ import {
 const filePath = 'unitDesignator.json';
 
 const unitDesignation = getJigDataJsonFile(filePath);
-console.log(`unitDesignation = `, unitDesignation.length);
 
 // Old:
 // const unitDesignation = getJsonFile(

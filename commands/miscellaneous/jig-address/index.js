@@ -97,7 +97,6 @@ export const handleAddressJig = async () => {
 
     // Random Unit Designator Jigg
     if (jigCustomChoice.includes('addUnitDesignator')) {
-      console.log('HANDLING UNIT DESIGNATION');
       const addy = possibleJigs?.length > 0 ? possibleJigs : addyToJig;
       const result = handleAddUnitDesignatorJig(addy, amountToJig);
 

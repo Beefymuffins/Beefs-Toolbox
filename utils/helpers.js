@@ -6,6 +6,7 @@ import chalk from 'chalk';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { stat, mkdir } from 'node:fs/promises';
 
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -98,12 +99,47 @@ export const capStreetName = (address) => {
   return words.join(' ');
 };
 
-export const writeToFile = async (filename, data) => {
-  fs.writeFile(filename, data, (err) => {
+// Want all outputs to be sent to the Output_Files Folder
+export const writeToFile = async (filename, folderName, data) => {
+  // If wanna save the date in the file name. Ex: csvOutputFile${date}.csv
+  const date = new Date().toJSON().slice(0, 10);
+  const time = new Date().getTime();
+
+  // Create Folder
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  const folder = path.join(__dirname, `../Output_Files/${folderName}`);
+  const isFolder = checkAndMakeDirectory(folder);
+
+  // Create Filename
+  const fileParts = filename.split('.');
+  const updateFileName = `${fileParts[0]}${date}-${time}.${fileParts[1]}`;
+  const output = path.join(folder, updateFileName);
+
+  fs.writeFile(output, data, (err) => {
     if (err) {
-      console.log(chalk.red(`Error writing to ${filename}: ${err.message}`));
+      console.log(chalk.red(`Error writing to ${output}: ${err.message}`));
       throw err;
     }
     console.log('The file has been saved successfully!');
   });
+
+  // Print hyperlink to the console
+  const hyperlink = fileUrl(output);
+  console.log(chalk.blue(`CSV File: ${hyperlink}`));
+};
+
+// Check for dir, if none, make it
+const checkAndMakeDirectory = async (dir) => {
+  try {
+    await stat(dir);
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      try {
+        await mkdir(dir);
+      } catch (err) {
+        console.error(err.message);
+      }
+    }
+  }
 };

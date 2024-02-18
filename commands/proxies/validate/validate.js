@@ -12,10 +12,9 @@ import {
 // * Ideas:
 // Make the url dynamic (can check proxy against any site inputted)
 
-// ESM specific features use __dirname
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const output = path.join(__dirname, 'outputFile.txt');
+// Folder name
+const outputFolder = 'Proxies';
+const outputFile = `validProxies.txt`;
 
 export const validateProxies = async (proxies) => {
   const validProxies = [];
@@ -59,13 +58,9 @@ export const validateProxies = async (proxies) => {
   );
 
   // Write valid proxies to the output file
-  await writeToFile(output, validProxies.join('\n'));
+  await writeToFile(outputFile, outputFolder, validProxies.join('\n'));
 
   console.log(`${validProxies.length} out of ${proxies.length} valid proxies.`);
-
-  // Print hyperlink to the console
-  const hyperlink = fileUrl(`${__dirname}/outputFile.txt`);
-  console.log(chalk.blue(`Valid Proxies File: ${hyperlink}`));
 };
 
 const makeRequest = (proxyInfo) => {

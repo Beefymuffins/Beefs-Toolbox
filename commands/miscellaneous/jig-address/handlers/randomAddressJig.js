@@ -49,6 +49,6 @@ export const handleRandomAddressJig = (
     addresses.push(address.trim());
   }
 
-  console.log(`addresses`, addresses);
+  console.log(`Random Addresses`, addresses);
   return addresses;
 };
