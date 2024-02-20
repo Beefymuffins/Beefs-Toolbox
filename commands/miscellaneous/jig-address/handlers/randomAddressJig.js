@@ -1,30 +1,35 @@
+import { getStreetSuffix } from '../../../../utils/checkForSuffix.js';
 import {
   getJigDataJsonFile,
   getRandomArrayIndex,
   getRandomMinMaxNumber,
 } from '../../../../utils/helpers.js';
+import { removeStreetSuffix } from '../../../../utils/removeStreetSuffix.js';
 
-const streetSuffixFilePath = 'streetSuffix.json';
-const unitDesignationFilePath = 'unitDesignator.json';
-const threeLetterFilePath = '3LetterCombinations.json';
-const fourLetterFilePath = '4LetterCombinations.json';
+//  Get Data
+const streetSuffixes = getJigDataJsonFile('streetSuffix.json');
+const unitDesignations = getJigDataJsonFile('unitDesignator.json');
+const threeLetterCombos = getJigDataJsonFile('3LetterCombinations.json');
+const fourLetterCombos = getJigDataJsonFile('4LetterCombinations.json');
 
 export const handleRandomAddressJig = (
   addyToJig,
   amountToJig,
-  addressSuffix
+  isAddressTwo,
+  addressTwo
 ) => {
-  //  Get Data
-  const streetSuffixes = getJigDataJsonFile(streetSuffixFilePath);
-  const unitDesignations = getJigDataJsonFile(unitDesignationFilePath);
-  const threeLetterCombos = getJigDataJsonFile(threeLetterFilePath);
-  const fourLetterCombos = getJigDataJsonFile(fourLetterFilePath);
+  // Get suffix
+  const addressSuffix = getStreetSuffix(addyToJig);
 
+  // Remove Suffix after its saved
+  const addressNoSuffix = removeStreetSuffix(addyToJig);
+
+  // If IS Suffix, use it randomly;
   const suffix = addressSuffix ? ` ${addressSuffix}` : '';
   const addresses = [];
 
   for (let i = 0; i < amountToJig; i++) {
-    let address = addyToJig;
+    let address = addressNoSuffix;
     const isTrue = Math.random() < 0.5;
     const randomSuffix = getRandomArrayIndex(streetSuffixes);
     const randomUnitDes = getRandomArrayIndex(unitDesignations);
@@ -42,13 +47,16 @@ export const handleRandomAddressJig = (
       ? (address = `${randomCombo} ${address}`)
       : (address += ` ${randomCombo}`);
 
-    // Randomly append unit designations
-    address += isTrue ? '' : `\n${randomUnitDes} ${randomNum}`;
+    // Randomly append unit designations ONLY if one is NOT supplied
+    if (!isAddressTwo)
+      address += isTrue ? '' : `\n${randomUnitDes} ${randomNum}`;
+
+    // Add the ORIGINAL unit designations back to address
+    if (isAddressTwo) address += `\n${addressTwo}`;
 
     // Push address to array
     addresses.push(address.trim());
   }
 
-  console.log(`Random Addresses`, addresses);
   return addresses;
 };

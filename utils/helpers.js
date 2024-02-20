@@ -39,18 +39,15 @@ export const getAuthInfoFromProxyUrl = (proxy) => {
 
 // Validate time format
 export const isValidTime = (str) => {
-  // Regex to check valid
-  // time in 12-hour format
+  // Regex to check valid time in 12-hour format
   const regex = new RegExp(/((1[0-2]|0?[1-9]):([0-5][0-9]))/);
 
-  //  if str
-  // is empty return false
+  //  if str is empty return false
   if (str == null) {
     return 'false';
   }
 
-  // Return true if the str
-  // matched the ReGex
+  // Return true if the str matched the ReGex
   if (regex.test(str) == true) {
     return 'true';
   }
@@ -75,11 +72,7 @@ export const getJigDataJsonFile = (filePath) => {
 export const getRandomMinMaxNumber = (min, max) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
-// Get Random Number
-export const getRandomNumber = (min, max) =>
-  Math.floor(Math.random() * (max - min + 1)) + min;
-
-// Function to generate a random unit designation
+// Function to generate a random index in an array
 export const getRandomArrayIndex = (array) => {
   const randomIndex = Math.floor(Math.random() * array.length);
   return array[randomIndex];
@@ -116,6 +109,7 @@ export const writeToFile = async (filename, folderName, data) => {
   const updateFileName = `${fileParts[0]}${date}-${time}.${fileParts[1]}`;
   const output = path.join(folder, updateFileName);
 
+  // Write file
   fs.writeFile(output, data, (err) => {
     if (err) {
       console.log(chalk.red(`Error writing to ${output}: ${err.message}`));

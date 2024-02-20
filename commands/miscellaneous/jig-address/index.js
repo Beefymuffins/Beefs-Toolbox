@@ -10,14 +10,14 @@ import {
 } from './handlers/index.js';
 import { capStreetName } from '../../../utils/helpers.js';
 import { writeCsvFile } from './writeCsvFile.js';
+import { handleSlightMisspellJig } from './handlers/slightMisspellJig.js';
+import { handleRandomPeriodsJig } from './handlers/randomPeriods.js';
 
 /**
- * ? Options to add:
+ * TODO Options to add:
  * Slight Misspell jig
  * Random Periods
  */
-
-// ? Right now im doing nothing with addressTwo
 
 export const handleAddressJig = async () => {
   const answers = await inquirer.prompt(questions);
@@ -36,23 +36,13 @@ export const handleAddressJig = async () => {
   // Create a jigs array
   const jigs = [];
 
-  const addressParts = addressOneCap.split(' ');
-  let address = addressParts;
-  let addressSuffix;
-
-  if (addressParts.length >= 3) {
-    address = addressParts.slice(0, -1); // deletes the suffix
-    addressSuffix = addressParts.slice(-1); // Save the suffix
-  }
-
-  const addyToJig = address.join(' ');
-
   // Create Random Or Custom Jigs from 1 - 500
   if (typeOfJig === 'random') {
     const jiggedAddresses = handleRandomAddressJig(
-      addyToJig,
+      addressOneCap,
       amountToJig,
-      addressSuffix
+      isAddressTwo,
+      addressTwo
     );
 
     // Add new addys to jigs array
@@ -62,9 +52,28 @@ export const handleAddressJig = async () => {
   if (typeOfJig === 'custom') {
     let possibleJigs;
 
+    // Random Slight Misspelling of address
+    if (jigCustomChoice.includes('slightMisspelling')) {
+      const addy = possibleJigs?.length > 0 ? possibleJigs : addressOneCap;
+
+      const result = handleSlightMisspellJig(addy, amountToJig);
+
+      possibleJigs = result;
+    }
+
+    // Random periods in address string
+    if (jigCustomChoice.includes('randomPeriods')) {
+      const addy = possibleJigs?.length > 0 ? possibleJigs : addressOneCap;
+
+      const result = handleRandomPeriodsJig(addy, amountToJig);
+
+      possibleJigs = result;
+    }
+
     // Random Street suffix jig
     if (jigCustomChoice.includes('changeSuffix')) {
-      const addy = possibleJigs?.length > 0 ? possibleJigs : addyToJig;
+      const addy = possibleJigs?.length > 0 ? possibleJigs : addressOneCap;
+
       const result = handleChangeSuffixJig(addy, amountToJig);
 
       possibleJigs = result;
@@ -72,7 +81,8 @@ export const handleAddressJig = async () => {
 
     // 3 Letter Jigs (before or after)
     if (jigCustomChoice.includes('threeLetter')) {
-      const addy = possibleJigs?.length > 0 ? possibleJigs : addyToJig;
+      const addy = possibleJigs?.length > 0 ? possibleJigs : addressOneCap;
+
       const result = handleThreeLetterJig(
         addy,
         amountToJig,
@@ -85,7 +95,8 @@ export const handleAddressJig = async () => {
 
     // 4 Letter Jigs (before or after)
     if (jigCustomChoice.includes('fourLetter')) {
-      const addy = possibleJigs?.length > 0 ? possibleJigs : addyToJig;
+      const addy = possibleJigs?.length > 0 ? possibleJigs : addressOneCap;
+
       const result = handleFourLetterJig(
         addy,
         amountToJig,
@@ -97,7 +108,8 @@ export const handleAddressJig = async () => {
 
     // Random Unit Designator Jigg
     if (jigCustomChoice.includes('addUnitDesignator')) {
-      const addy = possibleJigs?.length > 0 ? possibleJigs : addyToJig;
+      const addy = possibleJigs?.length > 0 ? possibleJigs : addressOneCap;
+
       const result = handleAddUnitDesignatorJig(addy, amountToJig);
 
       possibleJigs = result;

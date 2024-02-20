@@ -17,7 +17,7 @@ export const questions = [
       }
 
       const addressParts = address.split(' ');
-      if (addressParts.length >= 4 || addressParts.length < 2) {
+      if (addressParts.length >= 5 || addressParts.length < 2) {
         return `Please Enter a valid address. Example: '123 Main Street'`;
       }
 
@@ -90,24 +90,69 @@ export const questions = [
     type: 'checkbox',
     name: 'jigCustomChoice',
     message: 'How would you like your address jigged? (Can select multiple)',
-    choices: [
-      { name: '3-Letter', value: 'threeLetter' },
-      { name: '4-Letter', value: 'fourLetter' },
-      { name: 'Change Suffix', value: 'changeSuffix' },
-      {
-        name: 'Add Unit Designator',
-        value: 'addUnitDesignator',
-      },
-    ],
+    choices: (answers) => {
+      const defaultChoices = [
+        { name: '3-Letter', value: 'threeLetter' },
+        { name: '4-Letter', value: 'fourLetter' },
+        { name: 'Change Suffix', value: 'changeSuffix' },
+        { name: 'Slight Misspelling', value: 'slightMisspelling' },
+        { name: 'Random periods', value: 'randomPeriods' },
+        {
+          name: 'Add Unit Designator',
+          value: 'addUnitDesignator',
+        },
+      ];
+
+      if (answers.isAddressTwo === false) {
+        return defaultChoices;
+      }
+
+      // If there is an addressTwo hide the unitDesignations jigg
+      return defaultChoices.filter(
+        (choice) => choice.value !== 'addUnitDesignator'
+      );
+    },
     when: (answers) => answers.typeOfJig === 'custom',
     validate(choices) {
       if (choices.includes('threeLetter') && choices.includes('fourLetter')) {
         return `Please choose one or the other letter jig.`;
       }
 
+      // Needs at least one choice
+      if (choices.length === 0) {
+        return `Please choose an option.`;
+      }
+
       return true;
     },
   },
+  // {
+  //   type: 'checkbox',
+  //   name: 'jigCustomChoice',
+  //   message: 'How would you like your address jigged? (Can select multiple)',
+  //   choices: [
+  //     { name: '3-Letter', value: 'threeLetter' },
+  //     { name: '4-Letter', value: 'fourLetter' },
+  //     { name: 'Change Suffix', value: 'changeSuffix' },
+  //     {
+  //       name: 'Add Unit Designator',
+  //       value: 'addUnitDesignator',
+  //     },
+  //   ],
+  //   when: (answers) => answers.typeOfJig === 'custom',
+  //   validate(choices) {
+  //     if (choices.includes('threeLetter') && choices.includes('fourLetter')) {
+  //       return `Please choose one or the other letter jig.`;
+  //     }
+
+  //     // Needs at least one choice
+  //     if (choices.length === 0) {
+  //       return `Please choose an option.`;
+  //     }
+
+  //     return true;
+  //   },
+  // },
   {
     type: 'list',
     name: 'lettersBeforeOrAfter',
