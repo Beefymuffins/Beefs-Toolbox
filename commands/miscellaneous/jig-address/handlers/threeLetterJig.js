@@ -7,26 +7,17 @@ const filePath = '3LetterCombinations.json';
 
 const threeLetterCombo = getJigDataJsonFile(filePath);
 
-export const handleThreeLetterJig = (
-  addys,
-  amountToJig,
-  lettersBeforeOrAfter
-) => {
+export const handleThreeLetterJig = (addys, lettersBeforeOrAfter) => {
   const possibleJigs = [];
 
-  // Array of address to jig
-  const addressesToJig = Array.isArray(addys)
-    ? addys
-    : Array(Number(amountToJig)).fill(addys);
-
-  for (let i = 0; i < addressesToJig.length; i++) {
+  for (let i = 0; i < addys.length; i++) {
     // Random unitDesignation
     const randomThreeLetters = getRandomArrayIndex(threeLetterCombo);
 
     const newAddyJig =
       lettersBeforeOrAfter === 'before'
-        ? `${randomThreeLetters} ${addressesToJig[i]}`
-        : `${addressesToJig[i]} ${randomThreeLetters}`;
+        ? `${randomThreeLetters} ${addys[i]}`
+        : `${addys[i]} ${randomThreeLetters}`;
 
     // Check if the new string already exists in the new array
     if (!possibleJigs.includes(newAddyJig)) {

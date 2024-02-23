@@ -1,5 +1,4 @@
 import inquirer from 'inquirer';
-import chalk from 'chalk';
 import { questions } from './questions.js';
 import {
   handleAddUnitDesignatorJig,
@@ -12,12 +11,6 @@ import { capStreetName } from '../../../utils/helpers.js';
 import { writeCsvFile } from './writeCsvFile.js';
 import { handleSlightMisspellJig } from './handlers/slightMisspellJig.js';
 import { handleRandomPeriodsJig } from './handlers/randomPeriods.js';
-
-/**
- * TODO Options to add:
- * Slight Misspell jig
- * Random Periods
- */
 
 export const handleAddressJig = async () => {
   const answers = await inquirer.prompt(questions);
@@ -50,7 +43,8 @@ export const handleAddressJig = async () => {
   }
 
   if (typeOfJig === 'custom') {
-    let possibleJigs;
+    let possibleJigs = Array(Number(amountToJig)).fill(addressOneCap);
+    // let possibleJigs;
 
     // Random Slight Misspelling of address
     if (jigCustomChoice.includes('slightMisspelling')) {

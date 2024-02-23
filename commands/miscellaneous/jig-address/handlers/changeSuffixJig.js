@@ -9,16 +9,11 @@ const streetSuffix = getJigDataJsonFile(filePath);
 
 // * There is only 19 street suffix options, before Duplicates are made.
 
-export const handleChangeSuffixJig = (addys, amountToJig) => {
+export const handleChangeSuffixJig = (addys) => {
   const possibleJigs = [];
 
-  // Array of address to jig
-  const addressesToJig = Array.isArray(addys)
-    ? addys
-    : Array(Number(amountToJig)).fill(addys);
-
   // Loop through the array and remove street suffix from each address
-  const modifiedAddy = addressesToJig.map(removeStreetSuffix);
+  const modifiedAddy = addys.map(removeStreetSuffix);
 
   for (let i = 0; i < modifiedAddy.length; i++) {
     // Random unitDesignation

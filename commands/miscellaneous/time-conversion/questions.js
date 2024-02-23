@@ -1,6 +1,5 @@
 import { isValidTime } from '../../../utils/helpers.js';
 
-/* eslint-disable prefer-regex-literals */
 export const questions = [
   {
     type: 'input',
@@ -9,7 +8,8 @@ export const questions = [
     validate(time) {
       const check = isValidTime(time);
 
-      if (check === false) {
+      // eslint-disable-next-line eqeqeq
+      if (check == false) {
         return `Not a valid time.`;
       }
 

@@ -4,7 +4,10 @@ import {
   getRandomArrayIndex,
   getRandomMinMaxNumber,
 } from '../../../../utils/helpers.js';
+
 import { removeStreetSuffix } from '../../../../utils/removeStreetSuffix.js';
+import { handleRandomPeriodsJig } from './randomPeriods.js';
+import { handleSlightMisspellJig } from './slightMisspellJig.js';
 
 //  Get Data
 const streetSuffixes = getJigDataJsonFile('streetSuffix.json');
@@ -38,6 +41,17 @@ export const handleRandomAddressJig = (
     // Decide whether to append threeLetterCombos or fourLetterCombos
     const chosenCombo = isTrue ? threeLetterCombos : fourLetterCombos;
     const randomCombo = getRandomArrayIndex(chosenCombo);
+
+    // Random Slight Misspell
+    if (isTrue) {
+      // This will not modify the second word if there is one. Ex: East Main
+      // The function pops off the last value modifies the first value and
+      //  then adds them back. I like not modifying one of the words in the handleRandomAddressJig. So it doesn't turn to gibberish
+      address = handleSlightMisspellJig([address]).join();
+    }
+
+    // Random Periods
+    if (isTrue) address = handleRandomPeriodsJig([address]);
 
     // Randomly append street suffix
     address += isTrue ? `${suffix}` : ` ${randomSuffix}`;

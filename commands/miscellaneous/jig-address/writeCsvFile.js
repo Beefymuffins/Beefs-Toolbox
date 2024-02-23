@@ -7,8 +7,7 @@ import { writeToFile } from '../../../utils/helpers.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const outputFolder = 'Jigged_Addresses';
-const outputFile = `csvOutputFile.csv`;
-// const outputFile = `csvOutputFile${date}-${time}.csv`;
+const outputFile = `AddressJigs.csv`;
 
 export const writeCsvFile = (dataArray) => {
   const csvArray = [];

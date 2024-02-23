@@ -4,12 +4,16 @@ import { sleep } from '../utils/helpers.js';
 import { handleProxy } from '../commands/proxies/index.js';
 import { handleAccount } from '../commands/accounts/index.js';
 import { handleMiscellaneous } from '../commands/miscellaneous/index.js';
+import { checkOrCreateFolder } from '../utils/checkOutputFolder.js';
 
 export const run = async () => {
   try {
     process.title = `Beef's-Toolbox - Version: ${version}`;
     logLogo();
     console.log('');
+
+    // Check for Outputs_File, if none, create it!
+    await checkOrCreateFolder();
 
     const answer = await inquirer.prompt([
       {
@@ -33,6 +37,6 @@ export const run = async () => {
       await handleMiscellaneous();
     }
   } catch (error) {
-    console.log(`error = `, error);
+    console.log(`ERROR = `, error);
   }
 };

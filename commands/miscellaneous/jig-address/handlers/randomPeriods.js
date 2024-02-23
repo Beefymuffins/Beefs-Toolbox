@@ -1,60 +1,47 @@
-export const handleRandomPeriodsJig = (addys, amountToJig) => {
+import { addRandomPeriods } from '../../../../utils/addRandomPeriod.js';
+
+/* eslint-disable no-shadow */
+export const handleRandomPeriodsJig = (addys) => {
   const possibleJigs = [];
 
-  // Array of address to jig
-  const addressesToJig = Array.isArray(addys)
-    ? addys
-    : Array(Number(amountToJig)).fill(addys);
-
   // Iterate through each string in the array
-  for (let i = 0; i < addressesToJig.length; i++) {
+  for (let i = 0; i < addys.length; i++) {
     // Step 1: Split the string into an array
-    const stringArray = addressesToJig[i].split(' ');
+    const stringArray = addys[i].split(' ');
 
-    // Step 2: Remove the first and last elements
+    // If Address is 2 values. Ex: '123 Main St'
+    if (stringArray.length > 3) {
+      // Step 2: Remove the first and last elements
+      const firstElement = stringArray.shift();
+
+      const lastElement = stringArray.pop();
+
+      // Step 3: Modify the remaining values
+      for (let j = 0; j < stringArray.length; j++) {
+        stringArray[j] = addRandomPeriods(stringArray[j]);
+      }
+
+      // Step 4: Add the first and last values back
+      stringArray.unshift(firstElement);
+      stringArray.push(lastElement);
+
+      // Step 5: Join the array back into a string and update the original array
+      return possibleJigs.push(stringArray.join(' '));
+    }
+
+    // If Address is 3 values. Ex: '123 East Main St'
     const firstElement = stringArray.shift();
-    const lastElement = stringArray.pop();
 
-    // Step 3: Modify the remaining values
+    // Modify the remaining values
     for (let j = 0; j < stringArray.length; j++) {
       stringArray[j] = addRandomPeriods(stringArray[j]);
     }
 
-    // Step 4: Add the first and last values back
     stringArray.unshift(firstElement);
-    stringArray.push(lastElement);
 
-    // Step 5: Join the array back into a string and update the original array
+    // Join the array back into a string and update the original array
     possibleJigs.push(stringArray.join(' '));
   }
 
   return possibleJigs;
-};
-
-const addRandomPeriods = (inputString) => {
-  // Split the string into an array of words
-  const words = inputString.split(' ');
-
-  // Iterate through each word
-  for (let i = 0; i < words.length; i++) {
-    const word = words[i];
-    let modifiedWord = '';
-
-    // Iterate through each character in the word
-    for (let j = 0; j < word.length; j++) {
-      // Add the current character to the modified word
-      modifiedWord += word[j];
-
-      // Add a random period with a 25% probability
-      if (Math.random() < 0.25) {
-        modifiedWord += '.';
-      }
-    }
-
-    // Update the word in the array
-    words[i] = modifiedWord;
-  }
-
-  // Join the array back into a string and return it
-  return words.join(' ');
 };
