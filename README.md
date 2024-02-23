@@ -1,6 +1,7 @@
 # Beefs Toolbox
 
-A CLI app containing a variety of tools I use in my everyday life.
+A CLI app containing a variety of tools I use in my everyday life. (More to come!)
+
 
 ## Table of Contents
 - [Features](#features)
