@@ -1,5 +1,5 @@
 oldCode
 Output_Files
-node_modules
+**/node_modules
 *.txt
 *.csv
