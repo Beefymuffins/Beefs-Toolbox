@@ -26,6 +26,8 @@ export const handleAddressJig = async () => {
 
   const addressOneCap = capStreetName(addressOne);
 
+  // TODO: Change jigs to a set(). It auto filters out duplicates.
+  // TODO: Then handle how to create more jigs to === the amountToJig
   // Create a jigs array
   const jigs = [];
 
